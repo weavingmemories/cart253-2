@@ -4,42 +4,43 @@
  the temperature displayed by Yahoo Weather. They will rotate on a 3D axis.
  */
 
-// maximum RGB value
-final int MAXCOLOR = 255;
-// degrees in a circle
-final int CIRCLE = 360;
-// how many branches do the snowflakes have?
-final int NBRANCHES = 6;
-// how big are the snowflakes, in pixels?
-int SIZE = 100;
-// how many levels of branches do our snowflakes have?
-int DEPTH = 3;
-// how thick do we draw the lines?
-int THICKNESS = 12;
-// these arrays hold the randomized parameters for the snowflakes
-float[] fractions = new float[DEPTH];
-int[] angles = new int[DEPTH];
 
-int x;
-int y;
-int size;
-int snowflakeAmount = 50;
-long seed;
 
 class Snowflake {
 
   // Properties //
 
+  // maximum RGB value
+  final int MAXCOLOR = 255;
+  // degrees in a circle
+  final int CIRCLE = 360;
+  // how many branches do the snowflakes have?
+  final int NBRANCHES = 6;
+  // how big are the snowflakes, in pixels?
+  int SIZE = 100;
+  // how many levels of branches do our snowflakes have?
+  int DEPTH = 3;
+  // how thick do we draw the lines?
+  int THICKNESS = 12;
+  // these arrays hold the randomized parameters for the snowflakes
+  float[] fractions = new float[DEPTH];
+  int[] angles = new int[DEPTH];
+
+  int x;
+  int y;
+  int size;
+  long seed;
+
   // This is where the snowflakes will have a determined x and y,
   // velocity, speed, and size.
 
   // Constructor //
-  Snowflake(int _x, int _y, int tempSize) {
+  Snowflake(int _x, int _y, int tempSize, int lineWeight) {
     x = _x;
     y = _y;
-    size = tempSize;
+    SIZE = tempSize;
+    THICKNESS = lineWeight;
     seed = (long)random(100);
-    // This would be where they are procedurally generated?
   }
 
   // Method //
@@ -65,11 +66,13 @@ class Snowflake {
   }
 
   void snowflake() {
+    pushMatrix();
     randomSeed(seed);
     //set background color
-    background(MAXCOLOR, MAXCOLOR, MAXCOLOR);
+    //background(MAXCOLOR, MAXCOLOR, MAXCOLOR);
     //move the origin to the center of the canvas
-    translate(500/2, 500/2);
+    translate(x, y);
+
     //rotate the canvas so the zero-direction is up
     rotate(radians(-CIRCLE/4));
     //generate three random branch positions and three random angles
@@ -84,6 +87,7 @@ class Snowflake {
       branch(SIZE, 0);
       rotate(radians(CIRCLE/NBRANCHES));
     }
+    popMatrix();
   }
 
   void branch(int size, int depth) {
@@ -110,9 +114,9 @@ class Snowflake {
 
   void display() {
     // This is where we draw the snowflakes every frame with the updated coordinates.
-      stroke(0, 0, 0);
-      strokeWeight(THICKNESS);
-      fill(MAXCOLOR, MAXCOLOR, MAXCOLOR);
-      snowflake();
+    stroke(255, 255, 255);
+    strokeWeight(THICKNESS);
+    //fill(MAXCOLOR, MAXCOLOR, MAXCOLOR);
+    snowflake();
   }
 }
