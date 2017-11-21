@@ -5,7 +5,6 @@
  */
 
 
-
 class Snowflake {
 
   // Properties //
@@ -25,19 +24,26 @@ class Snowflake {
   // these arrays hold the randomized parameters for the snowflakes
   float[] fractions = new float[DEPTH];
   int[] angles = new int[DEPTH];
-
-  int x;
-  int y;
+  
+  float x;
+  float y = 0;
+  float vx;
+  float vy;
   int size;
   long seed;
+  float theta = 0;
+  int windSpeed = 0;
+  
 
   // This is where the snowflakes will have a determined x and y,
   // velocity, speed, and size.
 
   // Constructor //
-  Snowflake(int _x, int _y, int tempSize, int lineWeight) {
+  Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight) {
     x = _x;
     y = _y;
+    vx = tempVX;
+    vy = tempVY;
     SIZE = tempSize;
     THICKNESS = lineWeight;
     seed = (long)random(100);
@@ -63,6 +69,8 @@ class Snowflake {
      (Update the x position)
      4. Update the rotation
      */
+
+  
   }
 
   void snowflake() {
@@ -114,9 +122,13 @@ class Snowflake {
 
   void display() {
     // This is where we draw the snowflakes every frame with the updated coordinates.
+    vx = sin(theta);
+    x += vx;
+    x += windSpeed;
     stroke(255, 255, 255);
     strokeWeight(THICKNESS);
-    //fill(MAXCOLOR, MAXCOLOR, MAXCOLOR);
     snowflake();
+    y++;
+    theta += random(0.005);
   }
 }

@@ -5,7 +5,7 @@
  create global variables for the sound class
  */
 
-Snowflake[] snowflakes = new Snowflake[50];
+Snowflake[] snowflakes = new Snowflake[25];
 
 
 void setup() {
@@ -19,9 +19,13 @@ void setup() {
    7. load the sound library
    */
   size(1900, 1000);
+  
+  // This loads all of the snowflakes in the array at once, creating 25 snowflakes that will
+  // spawn at a random location on the x-axis and at the top of the screen, with random
+  // sizes up to 100 and line thicknesses up to 5.
 
   for (int i = 0; i < snowflakes.length; i++) {
-    snowflakes[i] = new Snowflake(floor(random(width)), floor(random(height)), floor(random(100)), floor(random(5)));
+    snowflakes[i] = new Snowflake(floor(random(width)), 0, 2, 2, floor(random(100)), floor(random(5)));
   }
 }
 
@@ -39,6 +43,9 @@ void draw() {
   background(0);
 
   for (int i = 0; i < snowflakes.length; i++) {
+    snowflakes[i].update();
     snowflakes[i].display();
+
   }
+  
 }
