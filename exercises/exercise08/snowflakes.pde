@@ -80,7 +80,8 @@ class Snowflake {
     //move the origin to the center of the canvas
     translate(x, y);
     rotateY(angleRotate);
-    angleRotate += 0.01;
+    rotateZ(angleRotate);
+    angleRotate += random(0.01);
 
     //rotate the canvas so the zero-direction is up
     rotate(radians(-CIRCLE/4));
@@ -133,5 +134,11 @@ class Snowflake {
     popMatrix();
     y++;
     theta += random(0.005);
+  }
+  
+  void isOffScreen() {
+    if (y > height+size){
+      y = 0;
+    }
   }
 }

@@ -5,7 +5,7 @@
  create global variables for the sound class
  */
 
-Snowflake[] snowflakes = new Snowflake[25];
+Snowflake[] snowflakes = new Snowflake[50];
 
 
 void setup() {
@@ -25,7 +25,7 @@ void setup() {
   // sizes up to 100 and line thicknesses up to 5.
 
   for (int i = 0; i < snowflakes.length; i++) {
-    snowflakes[i] = new Snowflake(floor(random(width)), 0, 2, 2, floor(random(100)), floor(random(5)));
+    snowflakes[i] = new Snowflake(floor(random(width)), floor(random(height)), 2, 2, floor(random(100)), floor(random(5)));
 
     
   }
@@ -47,5 +47,6 @@ void draw() {
   for (int i = 0; i < snowflakes.length; i++) {
     snowflakes[i].update();
     snowflakes[i].display();
+    snowflakes[i].isOffScreen();
   }
 }
