@@ -24,7 +24,7 @@ class Snowflake {
   // these arrays hold the randomized parameters for the snowflakes
   float[] fractions = new float[DEPTH];
   int[] angles = new int[DEPTH];
-  
+
   float x;
   float y = 0;
   float vx;
@@ -32,8 +32,9 @@ class Snowflake {
   int size;
   long seed;
   float theta = 0;
+  float angleRotate;
   int windSpeed = 0;
-  
+
 
   // This is where the snowflakes will have a determined x and y,
   // velocity, speed, and size.
@@ -69,8 +70,6 @@ class Snowflake {
      (Update the x position)
      4. Update the rotation
      */
-
-  
   }
 
   void snowflake() {
@@ -80,6 +79,8 @@ class Snowflake {
     //background(MAXCOLOR, MAXCOLOR, MAXCOLOR);
     //move the origin to the center of the canvas
     translate(x, y);
+    rotateY(angleRotate);
+    angleRotate += 0.01;
 
     //rotate the canvas so the zero-direction is up
     rotate(radians(-CIRCLE/4));
@@ -127,7 +128,9 @@ class Snowflake {
     x += windSpeed;
     stroke(255, 255, 255);
     strokeWeight(THICKNESS);
+    pushMatrix();
     snowflake();
+    popMatrix();
     y++;
     theta += random(0.005);
   }
