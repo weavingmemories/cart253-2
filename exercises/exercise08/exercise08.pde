@@ -1,9 +1,13 @@
+import processing.video.*;
+
 /*
   import the libraries
  create global variables for the sky class
  create global variables for the snowflake class
  create global variables for the sound class
  */
+ 
+ 
 
 Snowflake[] snowflakes = new Snowflake[50];
 
