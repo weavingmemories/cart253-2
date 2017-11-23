@@ -1,13 +1,18 @@
 import processing.video.*;
 
+Capture video; 
+
 /*
   import the libraries
  create global variables for the sky class
  create global variables for the snowflake class
  create global variables for the sound class
  */
- 
- 
+
+// Previous Frame
+PImage prevFrame;
+// How different must a pixel be to be a "motion" pixel
+float threshold = 50;  
 
 Snowflake[] snowflakes = new Snowflake[50];
 
@@ -24,14 +29,17 @@ void setup() {
    */
   size(1900, 1000, P3D);
 
-  // This loads all of the snowflakes in the array at once, creating 25 snowflakes that will
+  video = new Capture(this, 640, 480, 30);
+  prevFrame = createImage(video.width, video.height, RGB);
+  video.start();
+
+
+  // This loads all of the snowflakes in the array at once, creating 50 snowflakes that will
   // spawn at a random location on the x-axis and at the top of the screen, with random
   // sizes up to 100 and line thicknesses up to 5.
 
   for (int i = 0; i < snowflakes.length; i++) {
     snowflakes[i] = new Snowflake(floor(random(width)), floor(random(height)), 2, 2, floor(random(100)), floor(random(5)));
-
-    
   }
 }
 
@@ -48,6 +56,47 @@ void draw() {
    */
   background(0);
 
+  // Capture video
+  if (video.available()) {
+    // Save previous frame for motion detection!!
+    prevFrame.copy(video, 0, 0, video.width, video.height, 0, 0, video.width, video.height);
+    prevFrame.updatePixels();
+    video.read();
+  }
+
+  loadPixels();
+  video.loadPixels();
+  prevFrame.loadPixels(); 
+
+  // Begin loop to walk through every pixel
+  // Start with a total of 0
+  float totalMotion = 0;
+  // Sum the brightness of each pixel
+  for (int i = 0; i < video.pixels.length; i++) {               
+    color current = video.pixels[i];
+    // Step 2, what is the current color
+    color previous = prevFrame.pixels[i];
+    // Step 3, what is the previous color 
+    // Step 4, compare colors (previous vs. current)
+    float r1 = red(current);
+    float g1 = green(current);
+    float b1 = blue(current);
+    float r2 = red(previous);
+    float g2 = green(previous);
+    float b2 = blue(previous);
+
+    float diff = dist(r1, g1, b1, r2, g2, b2);
+
+    totalMotion += diff;
+  }
+
+  float avgMotion = totalMotion / video.pixels.length;
+
+  if (avgMotion >=5) {
+    println("Gasp");
+  } else {
+    println("Nope");
+  }
   for (int i = 0; i < snowflakes.length; i++) {
     snowflakes[i].update();
     snowflakes[i].display();
