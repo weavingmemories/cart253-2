@@ -16,7 +16,9 @@ float threshold = 50;
 
 // This boolean detects whether there is motion in the frame or not.
 boolean isMoving;
+int stillFrames = 0;
 
+Sky sky = new Sky();
 Snowflake[] snowflakes = new Snowflake[50];
 
 
@@ -32,9 +34,13 @@ void setup() {
    */
   size(1900, 1000, P3D);
 
-  video = new Capture(this, 640, 480, 30);
+  video = new Capture(this, 320, 240, 30);
   prevFrame = createImage(video.width, video.height, RGB);
   video.start();
+  
+  
+   sky.update();
+
 
 
   // This loads all of the snowflakes in the array at once, creating 50 snowflakes that will
@@ -47,6 +53,7 @@ void setup() {
 }
 
 void draw() {
+  
   /*
   1. read video feed
    2. read weather library
@@ -57,7 +64,6 @@ void draw() {
    5. update the snowflakes
    / display the snowflakes
    */
-  background(0);
 
   // Capture video
   if (video.available()) {
@@ -94,17 +100,24 @@ void draw() {
   }
 
   float avgMotion = totalMotion / video.pixels.length;
-
-  if (avgMotion >=8) {
+  println(totalMotion);
+  if (avgMotion >=20) {
     isMoving = true;
-    println("I'm Moving!");
+    stillFrames = 30;
+    //  println("I'm Moving!");
   } else {
-    isMoving = false;
-    println("I'm Still");
+    stillFrames--;
+    if (stillFrames == 0) {
+      isMoving = false;
+    }
+    //   println("I'm Still");
   }
   for (int i = 0; i < snowflakes.length; i++) {
     snowflakes[i].update();
     snowflakes[i].display();
     snowflakes[i].isOffScreen();
   }
+
+   sky.display();
+
 }

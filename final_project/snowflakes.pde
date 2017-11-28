@@ -78,7 +78,7 @@ class Snowflake {
     //set background color
     //background(MAXCOLOR, MAXCOLOR, MAXCOLOR);
     //move the origin to the center of the canvas
-    translate(x, y);
+    translate(x, y, 100);
     rotateY(angleRotate);
     rotateZ(angleRotate);
     angleRotate += random(0.01);
@@ -125,10 +125,10 @@ class Snowflake {
   void display() {
     // This is where we draw the snowflakes every frame with the updated coordinates.
 if (isMoving == true) {
-      windSpeed = 2;
+      windSpeed = constrain(windSpeed + 0.1, 0, 2);
   }
     if (isMoving == false) {
-      windSpeed = 0;
+      windSpeed = constrain(windSpeed - 0.1, 0, 2);
     }
     vx = sin(theta);
     x += vx;
