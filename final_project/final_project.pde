@@ -14,6 +14,9 @@ PImage prevFrame;
 // How different must a pixel be to be a "motion" pixel
 float threshold = 50;  
 
+// This boolean detects whether there is motion in the frame or not.
+boolean isMoving;
+
 Snowflake[] snowflakes = new Snowflake[50];
 
 
@@ -92,10 +95,12 @@ void draw() {
 
   float avgMotion = totalMotion / video.pixels.length;
 
-  if (avgMotion >=5) {
-    println("Gasp");
+  if (avgMotion >=8) {
+    isMoving = true;
+    println("I'm Moving!");
   } else {
-    println("Nope");
+    isMoving = false;
+    println("I'm Still");
   }
   for (int i = 0; i < snowflakes.length; i++) {
     snowflakes[i].update();

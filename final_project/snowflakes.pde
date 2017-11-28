@@ -33,7 +33,7 @@ class Snowflake {
   long seed;
   float theta = 0;
   float angleRotate;
-  int windSpeed = 0;
+  float windSpeed = 0;
 
 
   // This is where the snowflakes will have a determined x and y,
@@ -124,6 +124,12 @@ class Snowflake {
 
   void display() {
     // This is where we draw the snowflakes every frame with the updated coordinates.
+if (isMoving == true) {
+      windSpeed = 2;
+  }
+    if (isMoving == false) {
+      windSpeed = 0;
+    }
     vx = sin(theta);
     x += vx;
     x += windSpeed;
@@ -139,6 +145,9 @@ class Snowflake {
   void isOffScreen() {
     if (y > height+size){
       y = 0;
+    }
+    if (x > width+size){
+      x = 0;
     }
   }
 }
