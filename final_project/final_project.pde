@@ -1,12 +1,13 @@
+import processing.sound.*;
 import processing.video.*;
 
+//SoundFile background;
 Capture video; 
 
 /*
-  import the libraries
+ import the libraries
  create global variables for the sky class
  create global variables for the snowflake class
- create global variables for the sound class
  */
 
 // Previous Frame
@@ -18,29 +19,45 @@ float threshold = 50;
 boolean isMoving;
 int stillFrames = 0;
 
+// Inserts the soundfiles to play during the sketch.
+SoundFile bgm;
+SoundFile tone1;
+SoundFile tone2;
+SoundFile tone3;
+SoundFile tone4;
+SoundFile tone5;
+
 Sky sky = new Sky();
 Snowflake[] snowflakes = new Snowflake[50];
-
+SoundFile[] tones = new SoundFile[5];
 
 void setup() {
   /*
   1. set up the screen size
    2. create the sky class
    3. create the snowflakes class
-   4. create the sound class
-   5. load the video library
-   6. load the weather library
-   7. load the sound library
+   4. load the video library
+   5. load the weather library
+   6. load the sound library
    */
   size(1900, 1000, P3D);
-
+  
+  
+  tone1 = new SoundFile(this, "sounds/tone01.wav");
+  tone2 = new SoundFile(this, "sounds/tone02.wav");
+  tone3 = new SoundFile(this, "sounds/tone03.wav");
+  tone4 = new SoundFile(this, "sounds/tone04.wav");
+  tone5 = new SoundFile(this, "sounds/tone05.wav");
+  
+  bgm = new SoundFile(this, "sounds/bgmusic.mp3");
+  
   video = new Capture(this, 320, 240, 30);
   prevFrame = createImage(video.width, video.height, RGB);
   video.start();
+  bgm.loop();
   
   
    sky.update();
-
 
 
   // This loads all of the snowflakes in the array at once, creating 50 snowflakes that will
@@ -50,6 +67,7 @@ void setup() {
   for (int i = 0; i < snowflakes.length; i++) {
     snowflakes[i] = new Snowflake(floor(random(width)), floor(random(height)), 2, 2, floor(random(100)), floor(random(5)));
   }
+  
 }
 
 void draw() {
@@ -100,17 +118,15 @@ void draw() {
   }
 
   float avgMotion = totalMotion / video.pixels.length;
-  println(totalMotion);
+ // println(totalMotion);
   if (avgMotion >=20) {
     isMoving = true;
     stillFrames = 30;
-    //  println("I'm Moving!");
   } else {
     stillFrames--;
     if (stillFrames == 0) {
       isMoving = false;
     }
-    //   println("I'm Still");
   }
   for (int i = 0; i < snowflakes.length; i++) {
     snowflakes[i].update();

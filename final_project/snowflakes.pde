@@ -5,6 +5,7 @@
  */
 
 
+
 class Snowflake {
 
   // Properties //
@@ -25,7 +26,7 @@ class Snowflake {
   float[] fractions = new float[DEPTH];
   int[] angles = new int[DEPTH];
 
-  float x;
+ float x;
   float y = 0;
   float vx;
   float vy;
@@ -124,9 +125,9 @@ class Snowflake {
 
   void display() {
     // This is where we draw the snowflakes every frame with the updated coordinates.
-if (isMoving == true) {
+    if (isMoving == true) {
       windSpeed = constrain(windSpeed + 0.1, 0, 2);
-  }
+    }
     if (isMoving == false) {
       windSpeed = constrain(windSpeed - 0.1, 0, 2);
     }
@@ -140,14 +141,23 @@ if (isMoving == true) {
     popMatrix();
     y++;
     theta += random(0.005);
-  }
-  
-  void isOffScreen() {
-    if (y > height+size){
-      y = 0;
+    
+    // If the mouse is hovering over a snowflake, play a random tone from 1-5.
+    
+    if (dist(mouseX, mouseY, x, y) < SIZE/2) {
+      println("Moused Over!");
+      
     }
-    if (x > width+size){
-      x = 0;
+    
+  }
+    
+
+    void isOffScreen() {
+      if (y > height+size) {
+        y = 0;
+      }
+      if (x > width+size) {
+        x = 0;
+      }
     }
   }
-}
