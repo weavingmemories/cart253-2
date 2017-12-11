@@ -41,7 +41,7 @@ class Snowflake {
   // velocity, speed, and size.
 
   // Constructor //
-  Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight) {
+  Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight, String _tones) {
     x = _x;
     y = _y;
     vx = tempVX;
@@ -49,7 +49,8 @@ class Snowflake {
     SIZE = tempSize;
     THICKNESS = lineWeight;
     seed = (long)random(100);
-  }
+    _tones = tones[i]
+     }
 
   // Method //
 
@@ -146,7 +147,7 @@ class Snowflake {
     
     if (dist(mouseX, mouseY, x, y) < SIZE/2) {
       println("Moused Over!");
-      
+   //   tones.play();
     }
     
   }
@@ -160,4 +161,4 @@ class Snowflake {
         x = 0;
       }
     }
-  }
+}
