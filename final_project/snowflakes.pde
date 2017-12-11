@@ -41,7 +41,7 @@ class Snowflake {
   // velocity, speed, and size.
 
   // Constructor //
-  Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight, String _tones) {
+  Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight, SoundFile _tones) {
     x = _x;
     y = _y;
     vx = tempVX;
@@ -49,7 +49,7 @@ class Snowflake {
     SIZE = tempSize;
     THICKNESS = lineWeight;
     seed = (long)random(100);
-    _tones = tones[i]
+    
      }
 
   // Method //

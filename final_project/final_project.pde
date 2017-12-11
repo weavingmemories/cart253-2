@@ -21,15 +21,15 @@ int stillFrames = 0;
 
 // Inserts the soundfiles to play during the sketch.
 SoundFile bgm;
-SoundFile tone1;
-SoundFile tone2;
-SoundFile tone3;
-SoundFile tone4;
-SoundFile tone5;
+
+
 
 Sky sky = new Sky();
 Snowflake[] snowflakes = new Snowflake[50];
-SoundFile tones[] = new SoundFile[5];
+SoundFile tones = new SoundFile[5];
+   for (int i = 0; i < tones.length; i++) {
+  tones[i] = new SoundFile("tone0" + i + ".wav");
+}
 
 
 void setup() {
@@ -43,10 +43,7 @@ void setup() {
    */
   size(1900, 1000, P3D);
   
- // SoundFile tones = new SoundFile[5];
-//  for (int i = 0; i < tones.length; i++) {
-//    tones[i] = new SoundFile("tone0" + i + ".wav");
-//  }
+
   
   bgm = new SoundFile(this, "sounds/bgmusic.mp3");
   
@@ -57,10 +54,8 @@ void setup() {
   
   
    sky.update();
+   
 
-  for (int i = 0; i < tones.length; i ++) {
-  tones[i] = new SoundFile("tone0" + i + ".wav");
-}
 
   // This loads all of the snowflakes in the array at once, creating 50 snowflakes that will
   // spawn at a random location on the x-axis and at the top of the screen, with random
