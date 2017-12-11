@@ -145,13 +145,6 @@ class Snowflake {
     y++;
     theta += random(0.005);
     
-    // If the mouse is hovering over a snowflake, play a random tone from 1-5.
-    
-    if (dist(mouseX, mouseY, x, y) < SIZE/2) {
-      println("Moused Over!");
-     tone.play();
-    }
-    
   }
     
 
@@ -162,5 +155,15 @@ class Snowflake {
       if (x > width+size) {
         x = 0;
       }
+    }
+    
+    void mouseOver() {
+      
+          // If the mouse is hovering over a snowflake, play a random tone from 1-5.
+    
+    if (dist(mouseX, mouseY, x, y) < SIZE/2) {
+      println("Moused Over!");
+     tone.play();
+    }
     }
 }

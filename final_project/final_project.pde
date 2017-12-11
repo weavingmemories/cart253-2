@@ -25,7 +25,7 @@ SoundFile bgm;
 
 
 Sky sky = new Sky();
-SoundFile[5] tones = new SoundFile[5];
+SoundFile[] tones = new SoundFile[5];
 Snowflake[] snowflakes = new Snowflake[50];
 
 
@@ -53,7 +53,7 @@ void setup() {
    sky.update();
    
   for (int i = 0; i < tones.length; i++) {
-   tones[i] = new SoundFile("tone0" + i + ".wav");
+   tones[i] = new SoundFile(this, "sounds/tone0" + i + ".wav");
   }
 
   // This loads all of the snowflakes in the array at once, creating 50 snowflakes that will
@@ -131,6 +131,7 @@ void draw() {
     snowflakes[i].update();
     snowflakes[i].display();
     snowflakes[i].isOffScreen();
+    snowflakes[i].mouseOver();
   }
 
    sky.display();
