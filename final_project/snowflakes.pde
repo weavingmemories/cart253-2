@@ -35,13 +35,14 @@ class Snowflake {
   float theta = 0;
   float angleRotate;
   float windSpeed = 0;
+  SoundFile tone;
 
 
   // This is where the snowflakes will have a determined x and y,
   // velocity, speed, and size.
 
   // Constructor //
-  Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight, SoundFile _tones) {
+  Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight, SoundFile _tone) {
     x = _x;
     y = _y;
     vx = tempVX;
@@ -49,6 +50,7 @@ class Snowflake {
     SIZE = tempSize;
     THICKNESS = lineWeight;
     seed = (long)random(100);
+    tone = _tone;
     
      }
 
@@ -147,7 +149,7 @@ class Snowflake {
     
     if (dist(mouseX, mouseY, x, y) < SIZE/2) {
       println("Moused Over!");
-   //   tones.play();
+     tone.play();
     }
     
   }

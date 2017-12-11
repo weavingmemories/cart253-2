@@ -25,11 +25,9 @@ SoundFile bgm;
 
 
 Sky sky = new Sky();
+SoundFile[5] tones = new SoundFile[5];
 Snowflake[] snowflakes = new Snowflake[50];
-SoundFile tones = new SoundFile[5];
-   for (int i = 0; i < tones.length; i++) {
-  tones[i] = new SoundFile("tone0" + i + ".wav");
-}
+
 
 
 void setup() {
@@ -43,7 +41,6 @@ void setup() {
    */
   size(1900, 1000, P3D);
   
-
   
   bgm = new SoundFile(this, "sounds/bgmusic.mp3");
   
@@ -55,14 +52,17 @@ void setup() {
   
    sky.update();
    
-
+  for (int i = 0; i < tones.length; i++) {
+   tones[i] = new SoundFile("tone0" + i + ".wav");
+  }
 
   // This loads all of the snowflakes in the array at once, creating 50 snowflakes that will
   // spawn at a random location on the x-axis and at the top of the screen, with random
   // sizes up to 100 and line thicknesses up to 5.
 
   for (int i = 0; i < snowflakes.length; i++) {
-    snowflakes[i] = new Snowflake(floor(random(width)), floor(random(height)), 2, 2, floor(random(100)), floor(random(5)), tones[floor(random(5))]);
+    SoundFile randomTone = tones[floor(random(tones.length))];
+    snowflakes[i] = new Snowflake(floor(random(width)), floor(random(height)), 2, 2, floor(random(100)), floor(random(5)), randomTone);
   }
   
 
