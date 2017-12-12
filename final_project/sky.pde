@@ -1,7 +1,5 @@
-/* The sky class will be a class that is generated to look 'soft' with either noise or changePixels
- function, and will be dynamic and change color based on what color it is seeing from the webcam
- from the video library. It will likely keep the same color for a certain amount of time to keep
- the calming vibe and not be chaotic.
+/* The sky class will be a class that is generated to look 'soft' with the noise
+ function, and will change color based on what time it is (upon the sketch loading).
  */
 
 int h = hour();
@@ -64,6 +62,9 @@ class Sky {
       skyG = 2;
       skyB = 48;
     }
+    
+    // This is where the Noise pixels are created. They are only created once, and saved into an image
+    // which will then be tinted.
 
     noiseDetail(16, 0.6);
     for (int i = 0; i < width*height; i++) {
@@ -80,8 +81,7 @@ class Sky {
   }
 
   void display() {
-    // This is where the sky will take the reading taken by update() and
-    // will create a noise or changePixels sky using said color.
+    // This is where the background created with noise will be tinted according to the time of day.
     tint(skyR, skyG, skyB);
     image(background, 0, 0);
   }

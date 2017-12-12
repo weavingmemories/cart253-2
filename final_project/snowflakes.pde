@@ -26,7 +26,7 @@ class Snowflake {
   float[] fractions = new float[DEPTH];
   int[] angles = new int[DEPTH];
 
- float x;
+  float x;
   float y = 0;
   float vx;
   float vy;
@@ -39,7 +39,7 @@ class Snowflake {
 
 
   // This is where the snowflakes will have a determined x and y,
-  // velocity, speed, and size.
+  // velocity, speed, size, line thickness and tone assigned to them.
 
   // Constructor //
   Snowflake(int _x, int _y, float tempVX, int tempVY, int tempSize, int lineWeight, SoundFile _tone) {
@@ -51,30 +51,9 @@ class Snowflake {
     THICKNESS = lineWeight;
     seed = (long)random(100);
     tone = _tone;
-    
-     }
+  }
 
   // Method //
-
-  void update() {
-    // This will be where the snowflakes animate!
-    // They will be falling down the screen, updating their y position based on SPEED
-    // and their x position based on the sin/cos/tan wave MOTION DETECTION.
-    // They will also be rotating on a 3D axis.
-    // The number of snowflakes will change based on the TEMPERATURE reading.
-
-    /* So, first:
-     1. Check the temperature reading.
-     (Change the number for amount of snowflakes based off of that)
-     2. Check the wind velocity.
-     (Change the SPEED based off of the wind velocity)
-     (Update the y position)
-     3. Check the motion detection.
-     (Change the number for sin/cos/tan wave based off of that)
-     (Update the x position)
-     4. Update the rotation
-     */
-  }
 
   void snowflake() {
     pushMatrix();
@@ -128,6 +107,11 @@ class Snowflake {
 
   void display() {
     // This is where we draw the snowflakes every frame with the updated coordinates.
+    // This will be where the snowflakes animate!
+    // They will be falling down the screen, updating their y position based on SPEED
+    // and their x position based on the sin/cos/tan wave MOTION DETECTION.
+    // They will also be rotating on a 3D axis.
+
     if (isMoving == true) {
       windSpeed = constrain(windSpeed + 0.1, 0, 2);
     }
@@ -144,26 +128,26 @@ class Snowflake {
     popMatrix();
     y++;
     theta += random(0.005);
-    
   }
-    
 
-    void isOffScreen() {
-      if (y > height+size) {
-        y = 0;
-      }
-      if (x > width+size) {
-        x = 0;
-      }
+  // If the snowflakes are off-screen, they will wrap around on both the x and y axis.
+
+  void isOffScreen() {
+    if (y > height+size) {
+      y = 0;
     }
-    
-    void mouseOver() {
-      
-          // If the mouse is hovering over a snowflake, play a random tone from 1-5.
-    
+    if (x > width+size) {
+      x = 0;
+    }
+  }
+
+  void mouseOver() {
+
+    // If the mouse is hovering over a snowflake, play a random tone from 1-5.
+
     if (dist(mouseX, mouseY, x, y) < SIZE/2) {
       println("Moused Over!");
-     tone.play();
+      tone.play();
     }
-    }
+  }
 }

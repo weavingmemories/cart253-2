@@ -1,3 +1,22 @@
+/*
+
+ SNOWFLAKES by Macey McCormick
+ 
+ This program is less of a game and more of an interactive experience. I've always been very interested in
+ installation art and projects that respond to the user in an aesthetic way, as it sort of feels like a 
+ "magical" experience. I wanted to emulate that with this program, which is a custom experience based on time
+ and viewer interaction.
+ 
+ Covering 3D objects, rotations and manipulations of them was one of my inspirations, as well as learning about
+ the wide variety of libraries. I enjoyed integrating that into the generative snowflakes, as well as working with
+ noise() to generate a slightly different background every time the program runs. I wanted it to be not too ambitious
+ an undertaking, but to still be personal and slightly unique every time it loaded. I'm mostly proud of working with
+ multiple levels of interactivity- motion detection to make the snowflakes bluster across the screen, as well as
+ mousing over them to add to the soundscape and create a melody. Just watching them is soothing, but it adds a layer
+ of control for the viewer to be able to change the outcome.
+ 
+ */
+
 import processing.sound.*;
 import processing.video.*;
 
@@ -40,20 +59,22 @@ void setup() {
    6. load the sound library
    */
   size(1900, 1000, P3D);
-  
-  
+
+
   bgm = new SoundFile(this, "sounds/bgmusic.mp3");
-  
+
   video = new Capture(this, 320, 240, 30);
   prevFrame = createImage(video.width, video.height, RGB);
   video.start();
   bgm.loop();
-  
-  
-   sky.update();
-   
+
+
+  sky.update();
+
+  // This loads all of the soundfile tones into an array, organizing them.
+
   for (int i = 0; i < tones.length; i++) {
-   tones[i] = new SoundFile(this, "sounds/tone0" + i + ".wav");
+    tones[i] = new SoundFile(this, "sounds/tone0" + (i+1) + ".wav");
   }
 
   // This loads all of the snowflakes in the array at once, creating 50 snowflakes that will
@@ -64,13 +85,10 @@ void setup() {
     SoundFile randomTone = tones[floor(random(tones.length))];
     snowflakes[i] = new Snowflake(floor(random(width)), floor(random(height)), 2, 2, floor(random(100)), floor(random(5)), randomTone);
   }
-  
-
-  
 }
 
 void draw() {
-  
+
   /*
   1. read video feed
    2. read weather library
@@ -117,7 +135,7 @@ void draw() {
   }
 
   float avgMotion = totalMotion / video.pixels.length;
- // println(totalMotion);
+  // println(totalMotion);
   if (avgMotion >=20) {
     isMoving = true;
     stillFrames = 30;
@@ -134,6 +152,5 @@ void draw() {
     snowflakes[i].mouseOver();
   }
 
-   sky.display();
-
+  sky.display();
 }
